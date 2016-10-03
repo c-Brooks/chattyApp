@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from "react-dom";
 
-const App = React.createClass({
+const Message = React.createClass({
   getInitialState: () => {
     return (
           <div className='test'>
@@ -11,6 +11,7 @@ const App = React.createClass({
   },
 
   render: function () {
+    console.log('Rendering <App />');
     return (
       <div className='test'>
         Hello world
