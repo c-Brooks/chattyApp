@@ -48,6 +48,17 @@ const App = React.createClass({
       </div>
     );
   },
+
+  handleNewMessage: function(newMessage) {
+
+    this.state.data.messages.push({
+      id: this.state.data.messages.length,
+      username: newMessage.username,
+      content:  newMessage.msg
+    });
+    console.log('Messages:', this.state.data.messages);
+    this.setState({data: this.state.data})
+  }
 });
 
 export default App;

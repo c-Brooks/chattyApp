@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 const Message = React.createClass({
   render: function() {
-    console.log('Rendering <Message />', this.props);
+    console.log('Rendering <Message />');
     return (
       <div className='message'>
         <span className='username'>
