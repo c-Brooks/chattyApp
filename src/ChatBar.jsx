@@ -2,28 +2,37 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 const ChatBar = React.createClass({
+
+  getInitialState: function() {
+    return {
+      username: this.props.currentUser.name,
+      msgContent: ''
+    }
+  },
+
+
   render: function() {
     return (
       <footer>
-        <input id='username'
-        type='text'
-        value={this.props.currentUser.name} />
-        <input
-          id='new-message'
+          <input id='username'
           type='text'
-          placeholder='Type a message and hit ENTER' />
+          defaultValue={this.props.currentUser.name}
+          />
+
+          <input
+            id='new-message'
+            type='text'
+            placeholder='Type a message and hit ENTER'
+            value={this.state.msgContent}
+            onChange={this.handleChange}
+          />
       </footer>
     );
   },
-  onTextSubmit: (e) => {
-    // grabs 'value' - whatever is in text box
-    e.target.value
+
+  handleChange: function (event) {
+    console.log(event);
+    this.setState({msgContent: event.target.value});
   }
 });
-
 export default ChatBar;
-
-
-function onTextSubmit() {
-  console.log(this);
-}

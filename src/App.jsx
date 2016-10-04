@@ -24,7 +24,6 @@ const data = {
 const App = React.createClass({
 
   getInitialState:  function() {
-    console.log('app initial state');
     return {data: data};
   },
 
@@ -44,10 +43,11 @@ const App = React.createClass({
     return (
       <div>
         <MessageList messages={this.state.data.messages}/>
-        <ChatBar currentUser={this.state.data.currentUser}/>
+        <ChatBar currentUser={this.state.data.currentUser}
+                 onTextSubmit={this.handleNewMessage}/>
       </div>
     );
-  }
+  },
 });
 
 export default App;
