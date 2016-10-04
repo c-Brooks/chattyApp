@@ -1,5 +1,5 @@
 import React from 'react';
-import ReactDOM from "react-dom";
+import ReactDOM from 'react-dom';
 
 const ChatBar = React.createClass({
   render: function() {
@@ -7,7 +7,7 @@ const ChatBar = React.createClass({
       <footer>
         <input id='username'
         type='text'
-        placeholder='Your Name (Optional)' />
+        value={this.props.currentUser.name} />
         <input
           id='new-message'
           type='text'

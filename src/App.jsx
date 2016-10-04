@@ -6,16 +6,16 @@ import ChatBar     from './ChatBar.jsx';
 
 
 const data = {
-  currentUser: {name: "Bob"}, // optional. if currentUser is not defined, it means the user is Anonymous
+  currentUser: {name: 'Bob'}, // optional. if currentUser is not defined, it means the user is Anonymous
   messages: [
     {
-      username: "Bob",
-      content: "Has anyone seen my marbles?",
+      username: 'Bob',
+      content: 'Has anyone seen my marbles?',
     },
     {
-      username: "Anonymous",
-      content: "No, I think you lost them. \
-      You lost your marbles Bob. You lost them for good."
+      username: 'Anonymous',
+      content: 'No, I think you lost them. \
+      You lost your marbles Bob. You lost them for good.'
     }
   ]
 };
@@ -24,20 +24,27 @@ const data = {
 const App = React.createClass({
 
   getInitialState:  function() {
-    console.log('app initial state', this);
-    return data;
+    console.log('app initial state');
+    return {data: data};
   },
 
   componentDidMount: function() {
-    this.setState(data);
+    console.log('componentDidMount <App />');
+    setTimeout(() => {
+      console.log('Simulating incoming message');
+      // Add a new message to the list of messages in the data store
+      this.state.data.messages.push({id: 3, username: 'Michelle', content: 'Hello there!'});
+      // Update the state of the app component. This will call render()
+      this.setState({data: this.state.data})
+    }, 3000);
   },
 
   render: function() {
-    console.log('Rendering <App />', this);
+    console.log('Rendering <App />');
     return (
       <div>
-        <MessageList messages={this.state.messages}/>
-        <ChatBar currentUser={this.state.currentUser}/>
+        <MessageList messages={this.state.data.messages}/>
+        <ChatBar currentUser={this.state.data.currentUser}/>
       </div>
     );
   }
