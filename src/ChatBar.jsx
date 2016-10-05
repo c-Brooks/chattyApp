@@ -16,7 +16,8 @@ const ChatBar = React.createClass({
       <footer>
           <input id='username'
           type='text'
-          defaultValue={this.props.currentUser.name}
+          value={this.state.username}
+          onChange={this.handleNameChange}
           />
 
           <input
@@ -25,7 +26,7 @@ const ChatBar = React.createClass({
             placeholder='Type a message and hit ENTER'
             value={this.state.msgContent}
             onKeyPress={this.handleKeyPress}
-            onChange={this.handleChange}
+            onChange={this.handleMsgChange}
           />
       </footer>
     );
@@ -34,15 +35,21 @@ const ChatBar = React.createClass({
   handleKeyPress: function(event) {
     if (event.key === 'Enter') {
       this.props.onTextSubmit({
-        username: this.state.username,
+        username: this.state.username || 'Anonymous',
         msg: this.state.msgContent
       });
       this.setState({msgContent: ''});
     }
   },
 
-  handleChange: function (event) {
+  handleMsgChange: function (event) {
     this.setState({msgContent: event.target.value})
+    },
+
+
+  handleNameChange: function (event) {
+    console.log(event.target.value);
+    this.setState({username: event.target.value})
     }
   });
 

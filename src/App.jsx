@@ -2,7 +2,7 @@ import React       from 'react';
 import ReactDOM    from 'react-dom';
 import MessageList from './MessageList.jsx'
 import ChatBar     from './ChatBar.jsx';
-
+//const WebSocket        = require('ws');
 
 
 const data = {
