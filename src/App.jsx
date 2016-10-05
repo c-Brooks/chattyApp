@@ -9,19 +9,8 @@ import ChatBar     from './ChatBar.jsx';
 
 const data = {
   currentUser: {name: 'Bob'},
-  messages: [
-    {
-      username: 'Bob',
-      content: 'Has anyone seen my marbles?',
-    },
-    {
-      username: 'Anonymous',
-      content: 'No, I think you lost them. \
-      You lost your marbles Bob. You lost them for good.'
-    }
-  ]
-};
-
+  messages: []
+}
 
 const App = React.createClass({
 
@@ -34,23 +23,30 @@ const App = React.createClass({
   },
 
   componentDidMount: function() {
+    console.log('componentDidMount <App />');
 
-    this.socket.onmessage = function (event) {
-      const message = JSON.parse(event.data)
-      console.log('Client recieved', message);
-    }
 
-    console.log(this.state);
     this.socket.onopen = (event) => {
       console.log('Connected');
     }
 
-    console.log('componentDidMount <App />');
-  
+    this.socket.onmessage = (event)  => {
+      console.log(event);
+      const newMessage = JSON.parse(event.data);
+      let newState = this.state;
+      newState.data.messages.push({
+        id: newMessage.id,
+        username: newMessage.username,
+        content:  newMessage.msg
+      });
+      console.log('Client recieved', newMessage);
+      this.setState(newState);
+    }
+
   },
 
   render: function() {
-    console.log('Rendering <App />');
+    console.log('Rendering <App />', this.state.data);
     return (
       <div>
         <MessageList messages={this.state.data.messages}/>
@@ -61,16 +57,9 @@ const App = React.createClass({
   },
 
   sendMessage: function(newMessage) {
-
+    // Send the message to the server with a uuid
+    newMessage.id = uuid.v1();
     this.socket.send(JSON.stringify(newMessage));
-
-    this.state.data.messages.push({
-      id: this.state.data.messages.length,
-      username: newMessage.username,
-      content:  newMessage.msg
-    });
-    console.log('Messages:', this.state.data.messages);
-    this.setState({data: this.state.data})
   },
 
 });

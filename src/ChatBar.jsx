@@ -11,7 +11,6 @@ const ChatBar = React.createClass({
   },
 
   render: function() {
-    console.log(this.state);
     return (
       <footer>
         <input
@@ -49,9 +48,7 @@ const ChatBar = React.createClass({
     this.setState({msgContent: event.target.value})
     },
 
-
   handleNameChange: function (event) {
-    console.log(event.target.value);
     this.setState({username: event.target.value})
     }
   });
