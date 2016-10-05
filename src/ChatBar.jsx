@@ -10,15 +10,17 @@ const ChatBar = React.createClass({
     }
   },
 
-
   render: function() {
+    console.log(this.state);
     return (
       <footer>
-          <input id='username'
+        <input
+          id='username'
           type='text'
           value={this.state.username}
           onChange={this.handleNameChange}
-          />
+          autoComplete="off"
+        />
 
           <input
             id='new-message'
@@ -27,6 +29,7 @@ const ChatBar = React.createClass({
             value={this.state.msgContent}
             onKeyPress={this.handleKeyPress}
             onChange={this.handleMsgChange}
+            autoComplete="off"
           />
       </footer>
     );

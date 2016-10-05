@@ -1,12 +1,14 @@
 import React       from 'react';
 import ReactDOM    from 'react-dom';
+import uuid        from 'node-uuid';
+
 import MessageList from './MessageList.jsx'
 import ChatBar     from './ChatBar.jsx';
-//const WebSocket        = require('ws');
+
 
 
 const data = {
-  currentUser: {name: 'Bob'}, // optional. if currentUser is not defined, it means the user is Anonymous
+  currentUser: {name: 'Bob'},
   messages: [
     {
       username: 'Bob',
@@ -23,19 +25,28 @@ const data = {
 
 const App = React.createClass({
 
+  socket: new WebSocket('ws://localhost:4000/socketserver'),
+
   getInitialState:  function() {
-    return {data: data};
+    return {
+      data: data
+      };
   },
 
   componentDidMount: function() {
+
+    this.socket.onmessage = function (event) {
+      const message = JSON.parse(event.data)
+      console.log('Client recieved', message);
+    }
+
+    console.log(this.state);
+    this.socket.onopen = (event) => {
+      console.log('Connected');
+    }
+
     console.log('componentDidMount <App />');
-    setTimeout(() => {
-      console.log('Simulating incoming message');
-      // Add a new message to the list of messages in the data store
-      this.state.data.messages.push({id: 3, username: 'Michelle', content: 'Hello there!'});
-      // Update the state of the app component. This will call render()
-      this.setState({data: this.state.data})
-    }, 3000);
+  
   },
 
   render: function() {
@@ -44,12 +55,14 @@ const App = React.createClass({
       <div>
         <MessageList messages={this.state.data.messages}/>
         <ChatBar currentUser={this.state.data.currentUser}
-                 onTextSubmit={this.handleNewMessage}/>
+                 onTextSubmit={this.sendMessage}/>
       </div>
     );
   },
 
-  handleNewMessage: function(newMessage) {
+  sendMessage: function(newMessage) {
+
+    this.socket.send(JSON.stringify(newMessage));
 
     this.state.data.messages.push({
       id: this.state.data.messages.length,
@@ -58,7 +71,8 @@ const App = React.createClass({
     });
     console.log('Messages:', this.state.data.messages);
     this.setState({data: this.state.data})
-  }
+  },
+
 });
 
 export default App;
