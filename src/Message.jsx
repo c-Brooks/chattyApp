@@ -18,7 +18,7 @@ const Message = React.createClass({
       </div> )
     } else if (this.props.type === 'postNotification') {
       message = (
-      <div className='message'>
+      <div className='message system'>
         <span className='username'>
           {this.props.username}
         </span>
