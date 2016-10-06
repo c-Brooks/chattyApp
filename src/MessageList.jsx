@@ -10,11 +10,11 @@ const MessageList = React.createClass({
       console.log('message type', msg.type);
       msgs.push(
         <Message
-          type     = {msg.type}
-          username = {msg.username}
+          type       = {msg.type}
+          username   = {msg.username}
           userColour = {msg.userColour}
-          content  = {msg.content}
-          key      = {msg.id}
+          content    = {msg.content}
+          key        = {msg.id}
         />
       )
     });

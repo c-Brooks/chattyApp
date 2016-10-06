@@ -33,6 +33,7 @@ const App = React.createClass({
     this.socket.onmessage = (event)  => {
 
       const newMessage = JSON.parse(event.data);
+
       if (newMessage.type === 'userCountChanged') {
         this.setState({numUsers: newMessage.content})
       }
@@ -49,7 +50,6 @@ const App = React.createClass({
         this.setState(newState);
       }
     }
-
   },
 
   render: function() {
