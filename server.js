@@ -36,6 +36,12 @@ const server = express()
 const wss = new SocketServer({ server });
 wss.on('connection', (ws) => { // Create socket
   console.log('Client connected');
+  var connectionMsg = {
+    type: 'userCountChanged',
+    content: wss.clients.length
+  }
+
+  wss.broadcast(JSON.stringify(connectionMsg));
 
   ws.on('message', function incoming(message) {
     console.log('WS server recieved:', JSON.parse(message));
@@ -44,6 +50,11 @@ wss.on('connection', (ws) => { // Create socket
 
   ws.on('close', () => {
     console.log('Client disconnected');
+    var connectionMsg = {
+      type: 'userCountChanged',
+      content: wss.clients.length
+    };
+    wss.broadcast(JSON.stringify(connectionMsg));
   });
 });
 

@@ -12,6 +12,7 @@ const MessageList = React.createClass({
         <Message
           type     = {msg.type}
           username = {msg.username}
+          userColour = {msg.userColour}
           content  = {msg.content}
           key      = {msg.id}
         />

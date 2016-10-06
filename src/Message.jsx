@@ -4,12 +4,11 @@ import ReactDOM from 'react-dom';
 const Message = React.createClass({
   render: function() {
     var message;
-    console.log(this.props);
-    console.log('Rendering <Message />');
+    console.log('Rendering <Message />', this.props);
     if (this.props.type === 'postMessage') {
       message = (
       <div className='message'>
-        <span className='username'>
+        <span className='username' style={{color:this.props.userColour}}>
           {this.props.username}
         </span>
         <span className='content'>
@@ -27,7 +26,6 @@ const Message = React.createClass({
         </span>
       </div> )
     }
-    console.log(message);
     return message;
   }
 });

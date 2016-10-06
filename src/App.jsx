@@ -7,10 +7,9 @@ import ChatBar     from './ChatBar.jsx';
 
 
 
-const data = {
-  currentUser: {name: 'Bob'},
-  messages: []
-}
+//               blue       purple      red       green
+var colours = ['#0066ff', '#9900cc', '#e60000', '#2d862d']
+
 
 const App = React.createClass({
 
@@ -18,8 +17,9 @@ const App = React.createClass({
 
   getInitialState:  function() {
     return {
-      data: data
-      };
+      currentUser: { name: '', colour:colours[getRandInt(colours.length-1)] },
+      messages: []
+    };
   },
 
   componentDidMount: function() {
@@ -31,26 +31,38 @@ const App = React.createClass({
     }
 
     this.socket.onmessage = (event)  => {
+
       const newMessage = JSON.parse(event.data);
-      let newState = this.state;
-      newState.data.messages.push({
-        type:     newMessage.type,
-        id:       newMessage.id,
-        username: newMessage.username,
-        content:  newMessage.content
-      });
-      console.log('Client recieved', newMessage);
-      this.setState(newState);
+      if (newMessage.type === 'userCountChanged') {
+        this.setState({numUsers: newMessage.content})
+      }
+      else {
+        let newState = this.state;
+        newState.messages.push({
+          type:        newMessage.type,
+          id:          newMessage.id,
+          username:    newMessage.username,
+          userColour:  newMessage.userColour,
+          content:     newMessage.content
+        });
+        console.log('Client recieved', newMessage);
+        this.setState(newState);
+      }
     }
 
   },
 
   render: function() {
-    console.log('Rendering <App />', this.state.data);
+    console.log('Rendering <App />', this.state);
     return (
       <div>
-        <MessageList messages = {this.state.data.messages} />
-        <ChatBar currentUser  = {this.state.data.currentUser}
+      <nav>
+        <p id='title'>Chatty</p>
+        <p id='numUsers'> {this.state.numUsers} users online </p>
+      </nav>
+
+        <MessageList messages = {this.state.messages} />
+        <ChatBar currentUser  = {this.state.currentUser}
                  onTextSubmit = {this.sendMessage} />
       </div>
     );
@@ -66,3 +78,8 @@ const App = React.createClass({
 });
 
 export default App;
+
+
+function getRandInt(maxVal) {
+  return Math.floor(Math.random()*maxVal);
+}

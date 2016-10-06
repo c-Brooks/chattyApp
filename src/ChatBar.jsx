@@ -8,6 +8,7 @@ const ChatBar = React.createClass({
     origUsername = this.props.currentUser.name;
     return {
       username: origUsername,
+      userColour: this.props.currentUser.colour,
       msgContent: ''
     }
   },
@@ -53,6 +54,7 @@ const ChatBar = React.createClass({
       this.props.onTextSubmit({
         type: 'postMessage',
         username: this.state.username || 'Anonymous',
+        userColour: this.state.userColour,
         content: this.state.msgContent
       });
       this.setState({msgContent: ''});
