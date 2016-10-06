@@ -31,13 +31,13 @@ const App = React.createClass({
     }
 
     this.socket.onmessage = (event)  => {
-      console.log(event);
       const newMessage = JSON.parse(event.data);
       let newState = this.state;
       newState.data.messages.push({
-        id: newMessage.id,
+        type:     newMessage.type,
+        id:       newMessage.id,
         username: newMessage.username,
-        content:  newMessage.msg
+        content:  newMessage.content
       });
       console.log('Client recieved', newMessage);
       this.setState(newState);
@@ -49,18 +49,19 @@ const App = React.createClass({
     console.log('Rendering <App />', this.state.data);
     return (
       <div>
-        <MessageList messages={this.state.data.messages}/>
-        <ChatBar currentUser={this.state.data.currentUser}
-                 onTextSubmit={this.sendMessage}/>
+        <MessageList messages = {this.state.data.messages} />
+        <ChatBar currentUser  = {this.state.data.currentUser}
+                 onTextSubmit = {this.sendMessage} />
       </div>
     );
   },
 
   sendMessage: function(newMessage) {
     // Send the message to the server with a uuid
+    console.log('newMessage', newMessage);
     newMessage.id = uuid.v1();
     this.socket.send(JSON.stringify(newMessage));
-  },
+  }
 
 });
 

@@ -4,7 +4,6 @@ const config = require('./webpack.config');
 
 const express = require('express');
 const SocketServer = require('ws').Server;
-const WebSockets = require('ws');
 
 new WebpackDevServer(webpack(config), {
   publicPath: config.output.publicPath,
@@ -29,7 +28,9 @@ const PORT = 4000;
 const server = express()
    // Make the express server serve static assets (html, javascript, css) from the /public folder
   .use(express.static('public'))
-  .listen(PORT, '0.0.0.0', 'localhost', () => console.log(`Listening on ${ PORT }`));
+  .listen(PORT, '0.0.0.0', 'localhost', () => {
+    console.log(`Listening on ${ PORT }`)
+  });
 
 // Create the WebSockets server
 const wss = new SocketServer({ server });
@@ -45,7 +46,6 @@ wss.on('connection', (ws) => { // Create socket
     console.log('Client disconnected');
   });
 });
-
 
 wss.broadcast = function broadcast(data) {
   wss.clients.forEach(function each(client) {

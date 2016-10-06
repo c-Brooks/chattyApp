@@ -1,11 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+var origUsername;
 const ChatBar = React.createClass({
 
   getInitialState: function() {
+    origUsername = this.props.currentUser.name;
     return {
-      username: this.props.currentUser.name,
+      username: origUsername,
       msgContent: ''
     }
   },
@@ -14,31 +16,44 @@ const ChatBar = React.createClass({
     return (
       <footer>
         <input
-          id='username'
-          type='text'
-          value={this.state.username}
-          onChange={this.handleNameChange}
-          autoComplete="off"
+          id           = 'username'
+          type         = 'text'
+          value        = {this.state.username}
+          onKeyPress   = {this.handleNameKeyPress}
+          onChange     = {this.handleNameChange}
+          autoComplete ='off'
         />
 
-          <input
-            id='new-message'
-            type='text'
-            placeholder='Type a message and hit ENTER'
-            value={this.state.msgContent}
-            onKeyPress={this.handleKeyPress}
-            onChange={this.handleMsgChange}
-            autoComplete="off"
-          />
+        <input
+          id           = 'new-message'
+          type         = 'text'
+          placeholder  = 'Type a message and hit ENTER'
+          value        = {this.state.msgContent}
+          onKeyPress   = {this.handleMsgKeyPress}
+          onChange     = {this.handleMsgChange}
+          autoComplete = 'off'
+        />
       </footer>
     );
   },
 
-  handleKeyPress: function(event) {
+  handleNameKeyPress: function(event) {
     if (event.key === 'Enter') {
       this.props.onTextSubmit({
+        type: 'postNotification',
+        content: `${origUsername} has changed \
+        their name to ${this.state.username}`
+      });
+      this.setState({msgContent: ''});
+    }
+  },
+
+  handleMsgKeyPress: function(event) {
+    if (event.key === 'Enter') {
+      this.props.onTextSubmit({
+        type: 'postMessage',
         username: this.state.username || 'Anonymous',
-        msg: this.state.msgContent
+        content: this.state.msgContent
       });
       this.setState({msgContent: ''});
     }

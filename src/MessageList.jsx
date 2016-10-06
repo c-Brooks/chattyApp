@@ -4,14 +4,17 @@ import Message from './Message.jsx'
 
 const MessageList = React.createClass({
   render: function() {
-    console.log('Rendering <MessageList />', this.props.messages);
+    console.log('Rendering <MessageList />');
     var msgs =[]
     this.props.messages.forEach((msg) => {
+      console.log('message type', msg.type);
       msgs.push(
         <Message
-        username = {msg.username}
-        content  = {msg.content}
-        key      = {msg.id}/> // To give each message a unique key
+          type     = {msg.type}
+          username = {msg.username}
+          content  = {msg.content}
+          key      = {msg.id}
+        />
       )
     });
 
