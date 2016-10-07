@@ -40,6 +40,7 @@ const App = React.createClass({
       let newState = this.state;
       if (newMessage.type === 'postNotification') {
         newState.currentUser.name = newMessage.username;
+        newMessage.username = '';
       }
         newState.messages.push({
           type:        newMessage.type,

@@ -5,7 +5,7 @@ const ChatBar = React.createClass({
 
   getInitialState: function() {
     return {
-      username: this.props.currentUser.name,
+      username: 'Anonymous',
       userColour: this.props.currentUser.colour,
       msgContent: ''
     }
@@ -41,7 +41,7 @@ const ChatBar = React.createClass({
       this.props.onTextSubmit({
         type: 'postNotification',
         username: this.state.username,
-        content: `${this.props.currentUser.name} has changed \
+        content: `${this.props.currentUser.name || 'Anonymous'} has changed \
         their name to ${this.state.username}`
       });
       this.setState({
