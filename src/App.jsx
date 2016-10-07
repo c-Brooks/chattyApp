@@ -6,7 +6,6 @@ import MessageList from './MessageList.jsx'
 import ChatBar     from './ChatBar.jsx';
 
 
-
 //               blue       purple      red       green
 var colours = ['#0066ff', '#9900cc', '#e60000', '#2d862d']
 
