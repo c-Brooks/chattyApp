@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 const ChatBar = React.createClass({
 
-  getInitialState: function() {
+  getInitialState: function () {
     return {
       username: 'Anonymous',
       userColour: this.props.currentUser.colour,
@@ -11,7 +11,8 @@ const ChatBar = React.createClass({
     }
   },
 
-  render: function() {
+// Render chatbar with name and message input
+  render: function () {
     return (
       <footer>
         <input
@@ -36,7 +37,9 @@ const ChatBar = React.createClass({
     );
   },
 
-  handleNameKeyPress: function(event) {
+// On each key press, check if it's 'Enter'
+// If it is, send appropriate message
+  handleNameKeyPress: function (event) {
     if (event.key === 'Enter') {
       this.props.onTextSubmit({
         type: 'postNotification',
@@ -44,14 +47,9 @@ const ChatBar = React.createClass({
         content: `${this.props.currentUser.name || 'Anonymous'} has changed \
         their name to ${this.state.username}`
       });
-      this.setState({
-        msgContent: '',
-        username: this.state.username
-    });
     }
   },
-
-  handleMsgKeyPress: function(event) {
+  handleMsgKeyPress: function (event) {
     if (event.key === 'Enter') {
       this.props.onTextSubmit({
         type: 'postMessage',
@@ -59,10 +57,10 @@ const ChatBar = React.createClass({
         userColour: this.state.userColour,
         content: this.state.msgContent
       });
-      this.setState({msgContent: ''});
     }
   },
 
+// Update change in the input field by updating state
   handleMsgChange: function (event) {
     this.setState({msgContent: event.target.value})
     },

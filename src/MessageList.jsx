@@ -6,6 +6,7 @@ const MessageList = React.createClass({
   render: function() {
     console.log('Rendering <MessageList />');
     var msgs =[]
+    // Render each message in the list
     this.props.messages.forEach((msg) => {
       msgs.push(
         <Message
@@ -15,9 +16,8 @@ const MessageList = React.createClass({
           content    = {msg.content}
           key        = {msg.id}
         />
-      )
+      );
     });
-
     return (
       <div id='message-list'>
         {msgs}

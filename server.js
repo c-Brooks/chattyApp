@@ -33,21 +33,20 @@ const server = express()
   });
 
 // Create the WebSockets server
+// It also keeps track of how many clients are connected
 const wss = new SocketServer({ server });
-wss.on('connection', (ws) => { // Create socket
+wss.on('connection', (ws) => {
   console.log('Client connected');
   var connectionMsg = {
     type: 'userCountChanged',
     content: wss.clients.length
   }
-
   wss.broadcast(JSON.stringify(connectionMsg));
 
   ws.on('message', function incoming(message) {
     console.log('WS server recieved:', JSON.parse(message));
     wss.broadcast(message)
   });
-
   ws.on('close', () => {
     console.log('Client disconnected');
     var connectionMsg = {
@@ -58,6 +57,7 @@ wss.on('connection', (ws) => { // Create socket
   });
 });
 
+// Send message to all connected clients
 wss.broadcast = function broadcast(data) {
   wss.clients.forEach(function each(client) {
     client.send(data);

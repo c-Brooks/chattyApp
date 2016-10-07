@@ -2,9 +2,11 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 const Message = React.createClass({
+
   render: function() {
     var message;
     console.log('Rendering <Message />');
+    // If the message is an image
     if (this.props.type === 'postMessage'
     && this.props.content.match(/\.(jpg|png|gif)\b/)) {
       console.log('posting image...');
@@ -19,7 +21,8 @@ const Message = React.createClass({
             />
         </span>
       </div> );
-  } else if (this.props.type === 'postMessage'
+    } // If the message is a normal message
+    else if (this.props.type === 'postMessage'
       && !this.props.content.match(/<a[^>]+>(.+?\.(?:jpg|png|gif))</)) {
         message = (
         <div className='message'>
@@ -30,7 +33,8 @@ const Message = React.createClass({
           {this.props.content}
           </span>
         </div> )
-    } else if (this.props.type === 'postNotification') {
+      } // If the message is a notification
+    else if (this.props.type === 'postNotification') {
       message = (
       <div className='message system'>
         <span className='username'>
