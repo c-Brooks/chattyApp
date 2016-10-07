@@ -7,7 +7,6 @@ const MessageList = React.createClass({
     console.log('Rendering <MessageList />');
     var msgs =[]
     this.props.messages.forEach((msg) => {
-      console.log('message type', msg.type);
       msgs.push(
         <Message
           type       = {msg.type}

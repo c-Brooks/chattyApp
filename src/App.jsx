@@ -36,9 +36,11 @@ const App = React.createClass({
 
       if (newMessage.type === 'userCountChanged') {
         this.setState({numUsers: newMessage.content})
+      } else {
+      let newState = this.state;
+      if (newMessage.type === 'postNotification') {
+        newState.currentUser.name = newMessage.username;
       }
-      else {
-        let newState = this.state;
         newState.messages.push({
           type:        newMessage.type,
           id:          newMessage.id,
@@ -53,7 +55,7 @@ const App = React.createClass({
   },
 
   render: function() {
-    console.log('Rendering <App />', this.state);
+    console.log('Rendering <App />');
     return (
       <div>
       <nav>

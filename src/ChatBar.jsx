@@ -1,13 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 
-var origUsername;
 const ChatBar = React.createClass({
 
   getInitialState: function() {
-    origUsername = this.props.currentUser.name;
     return {
-      username: origUsername,
+      username: this.props.currentUser.name,
       userColour: this.props.currentUser.colour,
       msgContent: ''
     }
@@ -42,10 +40,14 @@ const ChatBar = React.createClass({
     if (event.key === 'Enter') {
       this.props.onTextSubmit({
         type: 'postNotification',
-        content: `${origUsername} has changed \
+        username: this.state.username,
+        content: `${this.props.currentUser.name} has changed \
         their name to ${this.state.username}`
       });
-      this.setState({msgContent: ''});
+      this.setState({
+        msgContent: '',
+        username: this.state.username
+    });
     }
   },
 

@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 const Message = React.createClass({
   render: function() {
     var message;
-    console.log('Rendering <Message />', this.props);
+    console.log('Rendering <Message />');
     if (this.props.type === 'postMessage'
     && this.props.content.match(/\.(jpg|png|gif)\b/)) {
       console.log('posting image...');
